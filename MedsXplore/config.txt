@@ -1,0 +1,6 @@
+{
+    "subscription_key": "YOUR SUBSCRIPTION KEY",
+    "endpoint": "YOUR ENDPOINT",
+    "SECRET_KEY": "YOUR SECRET KEY"
+
+}

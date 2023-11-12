@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+    <style>
+        body{
+            background-image: url("{{ url_for('static', filename='images/background.jpg') }}");}
+        @media (max-width: 1268px){
+        body{
+            background-image: url("{{ url_for('static', filename='images/mobile.jpg') }}");
+        }}
+    </style>
+<head>
+    <title>OCR Result</title>
+</head>
+<body>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/franc/3.0.3/franc.js"></script>
+    <ul class="circles">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+    </ul>
+    </div>
+        {% if matched_rows %}
+    <div class="signage-container">
+        {% for medicine, data in matched_rows.items() %}
+            {% for item in data %}
+                <div class="signage">
+                    <img class="thumbnail" src="{{ item['Image'] }}" alt="{{ item['Medicine'] }}" width="100" height="100">
+                    <img class="enlarged" src="{{ item['Image'] }}" alt="{{ item['Medicine'] }}">
+                    <h2>{{ item['Medicine'] }}</h2>
+                    <p><strong>Composition:</strong> {{ item['Composition'] }}</p>
+                    <p><strong>Uses:</strong> {{ item['Uses'] }} <i class="material-icons speak-button" data-text="{{ item['Uses'] }}">volume_up</i></p>
+                    <p><strong>Side Effects:</strong> {{ item['Side_effects'] }} <i class="material-icons speak-button" data-text="{{ item['Side_effects'] }}">volume_up</i></p>
+                    <p><strong>Manufacturer:</strong> {{ item['Manufacturer'] }}</p>
+                    <p><strong>Excellent Review %:</strong> {{ item['Excellent Review %'] }}</p>
+                    <p><strong>Average Review %:</strong> {{ item['Average Review %'] }}</p>
+                    <p><strong>Poor Review %:</strong> {{ item['Poor Review %'] }}</p>
+                    <a href="{{ url_for('buy_now', medicine_name=item['Medicine']) }}" target="_blank" class="btn btn-primary">Buy Now</a>
+                </div>
+            {% endfor %}
+        {% endfor %}
+    </div>      
+    </table>
+{% else %}
+{% endif %} 
+    <form action="/" method="post" enctype="multipart/form-data">
+        
+            <svg  id="waves" viewBox="0 0 500 500" preserveAspectRatio="xMinYMin meet" style="width:120% ;margin-top:-40px ;margin-left:-40px">
+            <path d="M0,150 C150,250 350,10 500,180 L500,00 L0,0 Z" style="stroke: none; fill:#05dede;"></path>
+        </svg>
+    </div >      
+    <h2 class="medsm" >MedsXplore</h2>   
+            <input type="file" id="upload-button" name="file">
+            <label for="upload-button">Upload Photo</label>       
+            <img id="uploaded-image" >
+            <select name="language">
+                <option >Select Language</option>
+                <option value="en">English</option>
+                <option value="hi">Hindi</option>
+                <option value="ar">Arabic</option>
+            </select>
+            <button id="submit-button" type="submit">Submit</button>
+            <!-- Add this link/button where users can register a complaint -->
+                <a class="complain" href="{{ url_for('register_complaint') }}">Didn't find your medicine? Register a complaint.</a>      
+                <!-- Add this link/button for the admin to view complaints -->
+                <a class="view-complaints" href="{{ url_for('view_complaints') }}">View Complaints</a>
+                
+   
+        </form> 
+    </div>
+    </body>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    </html>

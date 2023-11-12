@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+    <style>
+        /* Reset some default styles */
+        body {
+    font-family: 'Arial', sans-serif;
+    background-image: url('background.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed; /* This keeps the background fixed when scrolling */
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+
+.container {
+    max-width: 500px;
+    
+    margin: 0 auto;
+    padding: 30px;
+    background-color: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    animation: fadeIn 0.5s ease-in-out;
+    position: relative;
+    left:250px;
+    top:100px;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+h1 {
+    color: #333;
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+#upload-button {
+    display: none;
+}
+
+label {
+    display: block;
+    padding: 15px;
+    background-color: #007BFF;
+    color: #f1eeee;
+
+    cursor: pointer;
+    border-radius: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+label:hover {
+    background-color: #25b6d6;
+}
+
+#uploaded-image {
+    max-width: 100%;
+    
+    margin-top: 20px;
+    border: 2px solid #007BFF;
+    border-radius: 5px;
+}
+
+select {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+}
+
+#submit-button {
+    margin: 20px 0;
+    padding: 15px;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 20px;
+    transition: background-color 0.3s;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+#submit-button:hover {
+    background-color: #0056b3;
+}
+
+
+
+    </style>
+<head>
+    <title>OCR Result</title>
+</head>
+<body>
+    <h1>OCR Result</h1>
+    <div>
+        <h2>Recognized Text:</h2>
+        <ul>
+            {% for text in ocr_result %}
+                <li>{{ text }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+        {% if matched_rows %}
+    <h2>Matched Rows:</h2>
+    <div class="signage-container">
+        {% for medicine, data in matched_rows.items() %}
+            {% for item in data %}
+                <div class="signage">
+                    <h2>{{ item['Medicine'] }}</h2>
+                    <p><strong>Composition:</strong> {{ item['Composition'] }}</p>
+                    <p><strong>Uses:</strong> {{ item['Uses'] }}</p>
+                    <p><strong>Side Effects:</strong> {{ item['Side_effects'] }}</p>
+                    <p><strong>Manufacturer:</strong> {{ item['Manufacturer'] }}</p>
+                    <p><strong>Excellent Review %:</strong> {{ item['Excellent Review %'] }}</p>
+                    <p><strong>Average Review %:</strong> {{ item['Average Review %'] }}</p>
+                    <p><strong>Poor Review %:</strong> {{ item['Poor Review %'] }}</p>
+                    <a href="{{ url_for('speak_text', column='Uses', text=item['Uses']) }}" class="btn btn-primary">Listen to Uses</a>
+                    <a href="{{ url_for('speak_text', column='Side_effects', text=item['Side_effects']) }}" class="btn btn-primary">Listen to Side Effects</a>
+                    <a href="{{ url_for('buy_now', medicine_name=item['Medicine']) }}" target="_blank" class="btn btn-primary">Buy Now</a>
+                </div>
+            {% endfor %}
+        {% endfor %}
+    </div>
+    
+    
+         
+    </table>
+{% else %}
+    <p>No matches found.</p>
+{% endif %}
+
+<div class="container">
+    <h1>Healthcare</h1>
+    <form action="/" method="post" enctype="multipart/form-data"></form>
+    <input type="file" id="upload-button" name="file">
+        <label for="upload-button">Upload Photo</label>
+
+        <img id="uploaded-image" >
+        <select name="language">
+            <option value="en">English</option>
+            <option value="hi">Hindi</option>
+            <option value="es">Spanish</option>
+        </select>
+        <input type="submit" value="Upload and Analyze">
+    </form>
+</div>
+
+    </body>
+
+    <script>
+        const uploadButton = document.getElementById("upload-button");
+        const uploadedImage = document.getElementById("uploaded-image");
+
+        uploadButton.addEventListener("change", function () {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    uploadedImage.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+    </html>

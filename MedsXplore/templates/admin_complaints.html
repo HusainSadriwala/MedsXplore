@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Complaints</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style1.css') }}">
+</head>
+<body>
+    <h1 style="font-size: 3.2rem;">Admin Panel</h1>
+    <h2 style=" font-size: 2.2rem;text-align: center; /* Center align text content */">User Complaint List</h2>
+    {% if complaints %}
+        <table border="1">
+            <thead><tr>
+                    <th>Sr No.</th>
+                    <th>Medicine Name</th>
+                    <th>Image</th>
+                    <th>Action</th></tr></thead><tbody>
+                {% for complaint in complaints %}
+                    <tr id="complaint-{{ complaint.id }}">
+                        <td style="font-size: 1.4rem;">{{ loop.index }}</td>
+                        <td style="font-size: 1.8rem;">{{ complaint.medicine_name }}</td>
+                        <td><img src="{{ url_for('static', filename='complaints/' + complaint.medicine_name + '_complaint.jpg') }}" alt="{{ complaint.medicine_name }} Complaint Image" style="max-width: 200px; max-height: 100px;"></td>
+                        <td> <button class="add" onclick="editComplaint({{ complaint.id }})">Add</button>
+                            <button class="delete" onclick="deleteComplaint({{ complaint.id }})">Delete</button>
+                        </td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No complaints registered yet.</p>
+    {% endif %}
+<div id="editModal" class="modal">
+    <form method="post" action="{{ url_for('update_data') }}">
+        <h1>Add Medicine Details</h1>
+        <div> <input placeholder="Enter Medicine Name" type="text" id="edit_medicine" name="medicine" required> </div>
+        <div> <input placeholder="Enter Composition of Medicne" type="text" id="edit_composition" name="composition" required></div>
+        <div> <input placeholder="Enter Uses" type="text" id="edit_uses" name="uses" required></div>
+        <div> <input placeholder="Enter Side Effects" type="text" id="edit_side_effects" name="side_effects" required></div>
+        <div> <input placeholder="Enter Image URL" type="text" id="edit_image" name="image" required></div>
+        <div> <input placeholder="Enter Manufacturer Name" type="text" id="edit_manufacturer" name="manufacturer" required></div>
+        <div> <input placeholder="Enter Excellent Review" type="number" id="edit_excellent_review" name="excellent_review" required></div>
+        <div> <input placeholder="Enter Average Review" type="number" id="edit_average_review" name="average_review" required></div>
+        <div> <input placeholder="Enter Poor Review" type="number" id="edit_poor_review" name="poor_review" required></div>
+        <input type="hidden" id="edit_complaint_id" name="complaintId">
+        <div><button class="add" type="submit">Submit</button>
+            <button class="delete" type="button" onclick="closeEditModal()">Close</button></div>
+    </form></div>
+<script>
+    function deleteComplaint(complaintId) {
+$('#complaint-' + complaintId).remove();
+        if (confirm("Are you sure you want to delete this complaint?")) {
+            $('#complaint-' + complaintId).remove();}}
+    function editComplaint(id) {
+        const complaintData = {
+            medicine: "",composition: "",uses: "",side_effects: "",image: "",
+            manufacturer: "",excellent_review: "",average_review: "",poor_review: ""};
+        document.getElementById('edit_medicine').value = complaintData.medicine;
+        document.getElementById('edit_composition').value = complaintData.composition;
+        document.getElementById('edit_uses').value = complaintData.uses;
+        document.getElementById('edit_side_effects').value = complaintData.side_effects;
+        document.getElementById('edit_image').value = complaintData.image;
+        document.getElementById('edit_manufacturer').value = complaintData.manufacturer;
+        document.getElementById('edit_excellent_review').value = complaintData.excellent_review;
+        document.getElementById('edit_average_review').value = complaintData.average_review;
+        document.getElementById('edit_poor_review').value = complaintData.poor_review;
+        document.getElementById('edit_complaint_id').value = id;
+        document.getElementById('editModal').style.display = 'block';}
+    function closeEditModal() {
+        document.getElementById('editModal').style.display = 'none';}
+    function cancelComplaint(complaintId) {
+        const rowToRemove = document.getElementById(`complaint-${complaintId}`);
+        rowToRemove.parentNode.removeChild(rowToRemove);}
+    function correctComplaint(complaintId) {
+        console.log(`Correcting complaint with ID: ${complaintId}`);}
+</script></body></html>

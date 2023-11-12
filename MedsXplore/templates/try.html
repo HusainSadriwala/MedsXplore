@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Professional Website</title>
+    <style>
+    /* Reset default browser styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-image: url('background.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed; /* This keeps the background fixed when scrolling */
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+            width: 300px; /* Adjust the width as needed */
+            margin: 0 auto;
+            position: relative;
+        }
+
+.wave {
+            background: linear-gradient(to bottom right, transparent 49%, #fff 50%);
+            background-size: 100% 50px;
+            height: 50px; /* Adjust the height as needed */
+        }
+
+.content {
+            background: #fff;
+            padding: 20px;
+            border: 1px solid #ccc;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+h1 {
+            text-align: center;
+        }
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+h1 {
+    color: #333;
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+#upload-button {
+    display: none;
+}
+
+label {
+    display: block;
+    padding: 15px;
+    background-color: #007BFF;
+    color: #f1eeee;
+
+    cursor: pointer;
+    border-radius: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+label:hover {
+    background-color: #25b6d6;
+}
+
+#uploaded-image {
+    max-width: 100%;
+    
+    margin-top: 20px;
+    border: 2px solid #007BFF;
+    border-radius: 5px;
+}
+
+select {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+}
+
+#submit-button {
+    margin: 20px 0;
+    padding: 15px;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 20px;
+    transition: background-color 0.3s;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+#submit-button:hover {
+    background-color: #0056b3;
+}
+/* Media Query for Mobile Devices */
+@media (max-width: 768px) {
+    body {
+        background-image: url('mobile.jpg');
+    }
+
+    .container {
+        max-width: 100%;
+        left: 0;
+       
+        padding: 15px;
+        position: relative;
+        top:100px;
+    }
+    #uploaded-image {
+    max-width: 100%;
+    height: 200px; /* Set the height to 200px */
+    margin-top: 20px;
+    border: none;
+    border-radius: 5px;
+}
+}
+
+
+    </style>
+</head>
+<title>OCR Result</title>
+</head>
+<body>
+    <h1>OCR Result</h1>
+    <div>
+        <h2>Recognized Text:</h2>
+        <ul>
+            {% for text in ocr_result %}
+                <li>{{ text }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    <body>
+        <div class="container">
+            <div class="wave"></div>
+            <div class="content">
+                <h1>Healthcare</h1>
+                <form action="/" method="post" enctype="multipart/form-data">
+                    <input type="file" id="upload-button" name="file">
+                    <label for="upload-button">Upload Photo</label>
+                    <img id="uploaded-image">
+                    <select name="language">
+                        <option value="en">English</option>
+                        <option value="hi">Hindi</option>
+                        <option value="es">Spanish</option>
+                    </select>
+                    <button id="submit-button" type="submit">Submit</button>
+                </form>
+            </div>
+        </div>
+
+    <script>
+        const uploadButton = document.getElementById("upload-button");
+        const uploadedImage = document.getElementById("uploaded-image");
+
+        uploadButton.addEventListener("change", function () {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    uploadedImage.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+</body>
+</html>

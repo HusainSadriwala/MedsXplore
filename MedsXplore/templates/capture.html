@@ -1,0 +1,177 @@
+<style>
+    
+    body {
+    height: 100%;
+    background: linear-gradient(
+        180deg,
+        rgba(0, 41, 255, 0.02) 0%,
+        rgba(0, 41, 255, 0) 100%
+    );
+}
+label,
+input {
+    display: block;
+    width: 100%;
+  padding-bottom:10px;
+}
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    padding: 0.3em;
+}
+input[type="submit"] {
+    background: #021a3e;
+    color: white;
+    font-weight: 700;
+    font-size: 1.2rem;
+    border-radius: 5px;
+    margin-top: 1.3em;
+  cursor:pointer;
+}
+input[type="submit"]:hover{
+  background-color:#224c8c;
+}
+
+.container {
+    width: 460px;
+    margin: 5em auto;
+}
+form {
+    background-color: #ffffff;
+    padding-top: 40px;
+    padding-right: 40px;
+    padding-bottom: 40px;
+    padding-left: 40px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    border-radius: 3px;
+    overflow: hidden;
+}
+/* Style the select element */
+select {
+  width: 200px; /* Set the width as desired */
+  padding: 10px; /* Add padding for better appearance */
+  font-size: 16px; /* Set the font size */
+  border: 1px solid #ccc; /* Add a border */
+  border-radius: 5px; /* Add rounded corners */
+  background-color: #fff; /* Set background color */
+  position: relative;
+  left:90px;
+}
+
+/* Style the options */
+option {
+  font-size: 16px; /* Set the font size */
+  padding: 5px 10px; /* Add padding for better appearance */
+}
+
+/* Change the appearance of the dropdown arrow */
+select::-ms-expand {
+  display: none; /* Remove the default arrow in IE/Edge */
+}
+
+/* Add hover effect for the options */
+option:hover {
+  background-color: #f0f0f0; /* Change background color on hover */
+}
+
+
+
+input {
+    width: 100%;
+    padding: 9px 20px;
+    border: 1px solid #e1e2eb;
+    color: #102a43;
+    box-sizing: border-box;
+    font-size: 14px;
+    box-shadow: inset 0 2px 4px 0 rgba(206, 209, 224, 0.2);
+    border-radius: 3px;
+}
+.btn {
+    background-color: #337ab7;
+    color: #fff;
+    padding: 5px 10px;
+    text-decoration: none;
+    margin-right: 5px;
+    border: none;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #235a91;
+}
+
+.tb-img-view {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.tb-container {
+  width: 100%;
+  margin: 4em auto;
+  position:relative;
+}
+.tb-container img {
+  width: 200px;
+  height: auto;
+  display: none;
+  margin-bottom: 30px;
+}
+.tb-container input {
+  display: none;
+}
+.tb-container label {
+  width: 200px;
+  height: 45px;
+  background: #2f9c74;
+  color: #ffffff;
+  font-size: 15px;
+  text-transform: capitalize;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin:0 auto;
+
+
+}
+
+</style>
+<div class="container">
+    
+    <form>
+        <div class="tb-container">
+            <div class="tb-img-view">
+              <img id="tb-image" />
+            </div>
+            <label for="tb-file-upload">Upload Image</label>
+            <input type="file" id="tb-file-upload" name="file" accept="image/*" onchange="fileUpload(event);" />
+          </div>
+          <select name="language" >
+              <option value="en">English</option>
+              <option value="hi">Hindi</option>
+              <option value="es">Spanish</option>
+              <!-- Add more language options as needed -->
+          </select>
+          <input type="submit" value="Upload and Analyze">
+        <ul>
+        
+    </form>
+</div>
+<script>
+    const fileUpload = (event) => {
+      const files = event.target.files;
+      const filesLength = files.length;
+      if (filesLength > 0) {
+        const imageSrc = URL.createObjectURL(files[0]);
+        const imagePreviewElement = document.querySelector("#tb-image");
+        imagePreviewElement.src = imageSrc;
+        imagePreviewElement.style.display = "block";
+}
+};
+
+  </script>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <style>
+        body{
+            background-image: url("{{ url_for('static', filename='images/background.jpg') }}");}
+        @media (max-width: 1268px){
+        body{
+            background-image: url("{{ url_for('static', filename='images/mobile.jpg') }}");
+        }}
+    </style>
+<body>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</body>
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+    <ul class="flashes">
+        {% for message in messages %}
+            <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    <!-- Trigger alert using JavaScript -->
+    <script>
+        window.onload = function() {
+            alert("{{ messages[-1] }}");
+        };
+    </script>
+{% endif %}
+{% endwith %}
+<form style="margin-top: 150px;" method="post" enctype="multipart/form-data">    
+    <svg  id="waves" viewBox="0 0 500 500" preserveAspectRatio="xMinYMin meet" style="width:120% ;margin-top:-38px ;margin-left:-40px">
+    <path d="M0,150 C150,250 350,10 500,180 L500,00 L0,0 Z" style="stroke: none; fill:#05dede;"></path></svg>
+        <h2 style="position: relative; top:-870px; font-size: 4.8rem; color: white; ">Complaint Page</h2>
+    </div >    
+    <input type="text" class="medicineName" name="medicine_name" placeholder="Type Medicine Name" required>
+    <input type="file" id="upload-button" name="file">
+    <label class="newbutton" for="upload-button" style="margin-top: -530px;">Upload Photo</label>
+    <img id="uploaded-image" >
+    <button id="submit-button" type="submit">Register Complaint</button></form></div>
+
+    </body>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    
